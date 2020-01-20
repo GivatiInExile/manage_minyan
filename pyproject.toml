@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "manage_minyan"
+version = "0.1.0"
+description = "Auto generate weekly emails for Sabbath Prayer group"
+authors = ["Daniel Landesman"]
+
+[tool.poetry.dependencies]
+python = "3.7.4"
+google-api-python-client = "^1.7.11"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
