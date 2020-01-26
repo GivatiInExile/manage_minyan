@@ -11,6 +11,7 @@ google-auth-oauthlib = "^0.4.1"
 html2text = "^2020.1.16"
 pyyaml = "^5.3"
 python-dotenv = "^0.10.5"
+python-crontab = "^2.4.0"
 
 [tool.poetry.dev-dependencies]
 
