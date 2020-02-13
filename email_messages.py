@@ -5,6 +5,9 @@ Created on Sun Dec 22 20:19:26 2019
 
 @author: daniellandesman
 """
+import os
+from dotenv import load_dotenv
+load_dotenv(dotenv_path=".env")
 
 subject = "Shabbat {}"
 
@@ -15,12 +18,10 @@ Mincha Friday: {}
 Mincha Shabbat: {} 
 Shabbat Ends: {}
 
-@ 13 Eagles Notch, at the home of Mr. and Mrs. Douek 
+@ 38 Gentry, at the home of Mr. and Mrs. Berkowitz
 '''
+msg_signup = os.getenv("GOOGLE_DOC")
 
-msg_signup = '''
-YOUR_GOOGLE_DOC
-'''
 msg_signoff = '''
 P.S. This email is auto-generated. If you notice something wrong, please feel free to reach out.
 
@@ -37,10 +38,10 @@ Current Tally:
 #
 #msg_thursday = msg_minyan_details + msg_current_tally + msg_signoff
 msg_welcome_default = '''
-All, please welcome to Cross Creek Minyan
+All, please welcome to Cross Creek
 '''
 msg_welcome = '''
-All, please welcome to Cross Creek Minyan
+All, please welcome to Cross Creek
 '''
 
 msg_current_tally = '''
