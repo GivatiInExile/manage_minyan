@@ -9,24 +9,26 @@ Created on Tue Dec 17 22:10:17 2019
 from __future__ import print_function
 import pickle
 import os.path
+import os
+from dotenv import load_dotenv
+load_dotenv(dotenv_path=".env")
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 #from googleapiclient import discovery
-#from pprint import pprint
 import inspect
 import logging
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 # The ID and range of a sample spreadsheet.
-SAMPLE_SPREADSHEET_ID = 'YOUR SPREADSHEET ID'
+SAMPLE_SPREADSHEET_ID = os.getenv("SAMPLE_SPREADSHEET_ID")
 #EDIT RANGE FOR TALLY VALUES
-SAMPLE_RANGE_NAME = 'Form Responses 1!C45:D45'
+SAMPLE_RANGE_NAME = 'Form Responses 1!C46:D46'
 #EDIT RANGE TO CLEAR INPUTS AT BEGINNING OF EACH WEEK
-ERASE_RANGE_NAME = 'Form Responses 1!C2:D43'
+#ERASE_RANGE_NAME = 'Form Responses 1!C2:D45'
 
 #Use erase range below for testing
-#ERASE_RANGE_NAME = 'Form Responses 1!C48:D56'
+ERASE_RANGE_NAME = 'Form Responses 1!C48:D56'
 
 
 #def main():
@@ -45,7 +47,7 @@ def get_sheet():
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', SCOPES)
+                '/Users/daniellandesman/minyan_poetry/manage_minyan/credentials.json', SCOPES)
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
         with open('token.pickle', 'wb') as token:
