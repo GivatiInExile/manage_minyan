@@ -15,20 +15,23 @@ load_dotenv(dotenv_path=".env")
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
-#from googleapiclient import discovery
+from googleapiclient import discovery
 import inspect
 import logging
+
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 # The ID and range of a sample spreadsheet.
 SAMPLE_SPREADSHEET_ID = os.getenv("SAMPLE_SPREADSHEET_ID")
 #EDIT RANGE FOR TALLY VALUES
-SAMPLE_RANGE_NAME = 'Form Responses 1!C46:D46'
+SAMPLE_RANGE_NAME = 'Form Responses 1!C56:D56'
 #EDIT RANGE TO CLEAR INPUTS AT BEGINNING OF EACH WEEK
-#ERASE_RANGE_NAME = 'Form Responses 1!C2:D45'
+ERASE_RANGE_NAME = 'Form Responses 1!C4:D54'
 
+FRIDAY_STATUS_RANGE_NAME = 'Form Responses 1!D2'
+SATURDAY_STATUS_RANGE_NAME = 'Form Responses 1!D3'
 #Use erase range below for testing
-ERASE_RANGE_NAME = 'Form Responses 1!C48:D56'
+#ERASE_RANGE_NAME = 'Form Responses 1!C570:D80'
 
 
 #def main():
@@ -63,9 +66,72 @@ def clear_sheet():
     # Call the Sheets API
     sheet = service.spreadsheets()
     
-    sheet.values().clear(spreadsheetId=SAMPLE_SPREADSHEET_ID, 
+    sheet.values().clear(spreadsheetId=SAMPLE_SPREADSHEET_ID,
                 range=ERASE_RANGE_NAME,body=clear_values_request_body).execute( )
-    
+
+def protect_sheet():
+    service = get_sheet()
+    sheet = service.spreadsheets()
+
+    nrange = "TALLY_RANGE"
+
+    res1 = service.spreadsheets().get(spreadsheetId=SAMPLE_SPREADSHEET_ID, fields="namedRanges").execute()
+    namedRangeId = ""
+    for e in res1['namedRanges']:
+        if e['name'] == nrange:
+            namedRangeId = e['namedRangeId']
+            break
+    body = {
+        "requests": [
+            {
+                "addProtectedRange": {
+                    "protectedRange": {
+                        "namedRangeId": namedRangeId,
+                        "description": "Protecting Tallys",
+                        "warningOnly": False,
+                        "editors": {"users": ["shulpresidente@gmail.com","jonathan88.cohen@gmail.com"]},  # Added
+                    }
+                }
+            }
+        ]
+    }
+    res2 = service.spreadsheets().batchUpdate(spreadsheetId=SAMPLE_SPREADSHEET_ID, body=body).execute()
+    print(res2)
+
+def unprotect_sheet():
+    service = get_sheet()
+    sheet = service.spreadsheets()
+
+    nrange = "TALLY_RANGE"
+
+    res1 = service.spreadsheets().get(spreadsheetId=SAMPLE_SPREADSHEET_ID, fields="namedRanges").execute()
+    namedRangeId = ""
+    for e in res1['namedRanges']:
+        if e['name'] == nrange:
+            namedRangeId = e['namedRangeId']
+            break
+    body = {
+        "requests": [
+            {
+                "deleteProtectedRange": {
+                    "protectedRangeId": namedRangeId
+                }
+            }
+        ]
+    }
+    res2 = service.spreadsheets().batchUpdate(spreadsheetId=SAMPLE_SPREADSHEET_ID, body=body).execute()
+    print(res2)
+
+def update_minyan_status(range,values):
+    service = get_sheet()
+    sheet = service.spreadsheets()
+    value_range_body = {
+        'values': values
+    }
+    request = service.spreadsheets().values().update(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=range,
+                                                     valueInputOption='RAW', body=value_range_body).execute()
+
+
 def get_rsvps():
     service = get_sheet()
     sheet = service.spreadsheets()
@@ -80,10 +146,10 @@ def get_rsvps():
                       .format(inspect.stack()[0].function,
                               inspect.stack()[1].function))
     else:
-        
+
         friday_tally = int(values[0][0])
         saturday_tally = int(values[1][0])
-   
+
     return friday_tally, saturday_tally
 
 
@@ -95,23 +161,26 @@ import datetime
 
 
 def get_zman (date,text,offset_1,offset_2):
+    #url = f"https://www.ahavathtorah.org/calendar?view=day&cal_date={date}&date_start=specific+date&date_start_x=0&date_start_date={date}"
     url = f"https://www.ahavathtorah.org/calendar?view=day&cal_date={date}&date_start=specific+date&date_start_date={date}"
     # Get raw html text
     try:
         f = requests.get(url)
+        print(f)
     except:
         logging.error('Error getting url\n Function Trace: {} > {}'
                       .format(inspect.stack()[0].function,
                               inspect.stack()[1].function))
     
     raw_text =f.text
-    
+    print(raw_text)
     # Convert raw HTML to clean sting
     h = html2text.HTML2Text()
     h.ignore_links = True
     clean_text = h.handle(raw_text)
-    #text = text
+    print(clean_text)#text = text
     start_idx = clean_text.find(text)
+    print(start_idx)
     zman = clean_text[start_idx-offset_1:start_idx+offset_2].replace("\n","")
     return zman
     
@@ -123,10 +192,18 @@ candle_text = "p |    |  |\n\nCandle Lighting"
 havdalah_text = "p |    |  |\n\nHavdalah"
 parsha_text = "Parshat"
 
-
+import time
+from datetime import timedelta
 candles = get_zman(friday, candle_text,5,0)
 friday_mincha = get_zman(friday, mincha_txt,5,0)
 saturday_mincha = get_zman(saturday, mincha_txt,5,0)
 havdalah = get_zman(saturday, havdalah_text,5,0)
+#saturday_maariv = (datetime.datetime.strptime(havdalah,'%H:%M')- datetime.timedelta(minutes=9)).strftime('%H:%M')
 parsha = get_zman(saturday, parsha_text,0,20)
 #print(parsha)
+#update_minyan_status(FRIDAY_STATUS_RANGE_NAME,values = [['OK']])
+#protect_sheet()
+print(candles)
+print(friday_mincha)
+print(saturday_mincha)
+print(havdalah)

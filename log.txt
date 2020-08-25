@@ -6,3 +6,17 @@ shulpresidente@gmail.com
 <158128895205.14338.8562283798163461604@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
 shulpresidente@gmail.com
 <158128895205.14338.8562283798163461604@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
+ERROR:root:Error sending email
+ Function Trace: get_rsvps > on_thursday
+shulpresidente@gmail.com
+Traceback (most recent call last):
+  File "/Users/daniellandesman/minyan_poetry/manage_minyan/on_thursday.py", line 11, in <module>
+    mm.on_thursday()
+  File "/Users/daniellandesman/minyan_poetry/manage_minyan/manage_minyan.py", line 108, in on_thursday
+    friday_tally, saturday_tally = quickstart.get_rsvps()
+  File "/Users/daniellandesman/minyan_poetry/manage_minyan/quickstart.py", line 87, in get_rsvps
+    return friday_tally, saturday_tally
+UnboundLocalError: local variable 'friday_tally' referenced before assignment
+cross-creek-minyan@googlegroups.com
+cross-creek-minyan@googlegroups.com
+cross-creek-minyan@googlegroups.com
