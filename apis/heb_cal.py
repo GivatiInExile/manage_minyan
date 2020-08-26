@@ -34,7 +34,7 @@ class HebCalSession(BaseSession):
         omer="on",
         israel="off",
         geo="zip",
-        zip="07621",
+        zip="07631",
     ):
         """
         :param version: v, version, 1
@@ -113,13 +113,14 @@ class HebCalSession(BaseSession):
         url = ENDPOINTS["standard"]
         return self.get(url, params=params)
 
-    def get_shabbos_times(self, zip: str = "07621", date: datetime.date = datetime.date.today()):
+    def get_shabbos_times(self, zip: str = "07631", date: datetime.date = datetime.date.today()):
         """ Get shabbos times """
         params = {
             "cfg": "json",
             "m": 42,
             "b": 18,
             "a": "on",
+            "s":"on",
             "leyning": "off",
             "geo": "zip",
             "zip": zip,

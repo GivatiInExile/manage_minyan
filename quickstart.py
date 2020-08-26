@@ -166,24 +166,22 @@ def get_zman (date,text,offset_1,offset_2):
     # Get raw html text
     try:
         f = requests.get(url)
-        print(f)
+
     except:
         logging.error('Error getting url\n Function Trace: {} > {}'
                       .format(inspect.stack()[0].function,
                               inspect.stack()[1].function))
     
     raw_text =f.text
-    print(raw_text)
     # Convert raw HTML to clean sting
     h = html2text.HTML2Text()
     h.ignore_links = True
     clean_text = h.handle(raw_text)
-    print(clean_text)#text = text
     start_idx = clean_text.find(text)
-    print(start_idx)
     zman = clean_text[start_idx-offset_1:start_idx+offset_2].replace("\n","")
     return zman
-    
+
+'''
 today = datetime.date.today()
 friday = today + datetime.timedelta( (4-today.weekday()) % 7 )
 saturday = friday + datetime.timedelta(1)
@@ -191,19 +189,24 @@ mincha_txt = "p |    |  |\n\nMincha"
 candle_text = "p |    |  |\n\nCandle Lighting"
 havdalah_text = "p |    |  |\n\nHavdalah"
 parsha_text = "Parshat"
-
+'''
 import time
 from datetime import timedelta
-candles = get_zman(friday, candle_text,5,0)
+#candles = get_zman(friday, candle_text,5,0)
 friday_mincha = get_zman(friday, mincha_txt,5,0)
 saturday_mincha = get_zman(saturday, mincha_txt,5,0)
-havdalah = get_zman(saturday, havdalah_text,5,0)
+#havdalah = get_zman(saturday, havdalah_text,5,0)
 #saturday_maariv = (datetime.datetime.strptime(havdalah,'%H:%M')- datetime.timedelta(minutes=9)).strftime('%H:%M')
-parsha = get_zman(saturday, parsha_text,0,20)
+#parsha = get_zman(saturday, parsha_text,0,20)
 #print(parsha)
 #update_minyan_status(FRIDAY_STATUS_RANGE_NAME,values = [['OK']])
 #protect_sheet()
-print(candles)
-print(friday_mincha)
-print(saturday_mincha)
-print(havdalah)
+
+
+from get_shabbos_times import get_just_time
+candles = get_just_time("message","candles")
+friday_mincha = candles
+havdalah = get_just_time("message","havdalah")
+
+parsha = get_just_time("title","parashat")
+saturday_maariv = (datetime.datetime.strptime(havdalah[:-2],'%H:%M')- datetime.timedelta(minutes=9)).strftime('%H:%M')
