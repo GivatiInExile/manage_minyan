@@ -10,8 +10,7 @@ from __future__ import print_function
 import pickle
 import os.path
 import os
-from dotenv import load_dotenv
-load_dotenv(dotenv_path=".env")
+from config import *
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -22,16 +21,14 @@ import logging
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 # The ID and range of a sample spreadsheet.
-SAMPLE_SPREADSHEET_ID = os.getenv("SAMPLE_SPREADSHEET_ID")
 #EDIT RANGE FOR TALLY VALUES
-SAMPLE_RANGE_NAME = 'Form Responses 1!C56:D56'
-#EDIT RANGE TO CLEAR INPUTS AT BEGINNING OF EACH WEEK
-ERASE_RANGE_NAME = 'Form Responses 1!C4:D54'
+TALLY_RANGE = 'Form Responses 1!C62:D62'
 
-FRIDAY_STATUS_RANGE_NAME = 'Form Responses 1!D2'
-SATURDAY_STATUS_RANGE_NAME = 'Form Responses 1!D3'
+#EDIT RANGE TO CLEAR INPUTS AT BEGINNING OF EACH WEEK
+ERASE_RANGE = 'Form Responses 1!C4:D59'
+
 #Use erase range below for testing
-#ERASE_RANGE_NAME = 'Form Responses 1!C570:D80'
+#ERASE_RANGE = 'Form Responses 1!C70:D80'
 
 
 #def main():
@@ -50,7 +47,7 @@ def get_sheet():
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                '/Users/daniellandesman/minyan_poetry/manage_minyan/credentials.json', SCOPES)
+            SECRET_FILE, SCOPES)
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
         with open('token.pickle', 'wb') as token:
@@ -61,21 +58,20 @@ def get_sheet():
 def clear_sheet():
     service = get_sheet()
     clear_values_request_body = {
-    # TODO: Add desired entries to the request body.
     }
     # Call the Sheets API
     sheet = service.spreadsheets()
     
-    sheet.values().clear(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                range=ERASE_RANGE_NAME,body=clear_values_request_body).execute( )
+    sheet.values().clear(spreadsheetId=SPREADSHEET_ID,
+                range=ERASE_RANGE,body=clear_values_request_body).execute( )
 
 def protect_sheet():
     service = get_sheet()
     sheet = service.spreadsheets()
 
-    nrange = "TALLY_RANGE"
+    nrange = "Tally_Range"
 
-    res1 = service.spreadsheets().get(spreadsheetId=SAMPLE_SPREADSHEET_ID, fields="namedRanges").execute()
+    res1 = service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID, fields="namedRanges").execute()
     namedRangeId = ""
     for e in res1['namedRanges']:
         if e['name'] == nrange:
@@ -95,16 +91,16 @@ def protect_sheet():
             }
         ]
     }
-    res2 = service.spreadsheets().batchUpdate(spreadsheetId=SAMPLE_SPREADSHEET_ID, body=body).execute()
+    res2 = service.spreadsheets().batchUpdate(spreadsheetId=SPREADSHEET_ID, body=body).execute()
     print(res2)
 
 def unprotect_sheet():
     service = get_sheet()
     sheet = service.spreadsheets()
 
-    nrange = "TALLY_RANGE"
+    nrange = "Tally_Range"
 
-    res1 = service.spreadsheets().get(spreadsheetId=SAMPLE_SPREADSHEET_ID, fields="namedRanges").execute()
+    res1 = service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID, fields="namedRanges").execute()
     namedRangeId = ""
     for e in res1['namedRanges']:
         if e['name'] == nrange:
@@ -119,7 +115,7 @@ def unprotect_sheet():
             }
         ]
     }
-    res2 = service.spreadsheets().batchUpdate(spreadsheetId=SAMPLE_SPREADSHEET_ID, body=body).execute()
+    res2 = service.spreadsheets().batchUpdate(spreadsheetId=SPREADSHEET_ID, body=body).execute()
     print(res2)
 
 def update_minyan_status(range,values):
@@ -128,7 +124,7 @@ def update_minyan_status(range,values):
     value_range_body = {
         'values': values
     }
-    request = service.spreadsheets().values().update(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=range,
+    request = service.spreadsheets().values().update(spreadsheetId=SPREADSHEET_ID, range=range,
                                                      valueInputOption='RAW', body=value_range_body).execute()
 
 
@@ -136,8 +132,8 @@ def get_rsvps():
     service = get_sheet()
     sheet = service.spreadsheets()
     #value_render_option = 'FORMATTED_VALUE'
-    result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                                range=SAMPLE_RANGE_NAME,majorDimension='COLUMNS').execute()
+    result = sheet.values().get(spreadsheetId=SPREADSHEET_ID,
+                                range=TALLY_RANGE, majorDimension='COLUMNS').execute()
 
     values = result.get('values', [])
 
@@ -181,7 +177,7 @@ def get_zman (date,text,offset_1,offset_2):
     zman = clean_text[start_idx-offset_1:start_idx+offset_2].replace("\n","")
     return zman
 
-'''
+
 today = datetime.date.today()
 friday = today + datetime.timedelta( (4-today.weekday()) % 7 )
 saturday = friday + datetime.timedelta(1)
@@ -189,23 +185,24 @@ mincha_txt = "p |    |  |\n\nMincha"
 candle_text = "p |    |  |\n\nCandle Lighting"
 havdalah_text = "p |    |  |\n\nHavdalah"
 parsha_text = "Parshat"
-'''
+
 import time
 from datetime import timedelta
 #candles = get_zman(friday, candle_text,5,0)
-friday_mincha = get_zman(friday, mincha_txt,5,0)
-saturday_mincha = get_zman(saturday, mincha_txt,5,0)
+#friday_mincha = get_zman(friday, mincha_txt,5,0)
+#saturday_mincha = get_zman(saturday, mincha_txt,5,0)
 #havdalah = get_zman(saturday, havdalah_text,5,0)
 #saturday_maariv = (datetime.datetime.strptime(havdalah,'%H:%M')- datetime.timedelta(minutes=9)).strftime('%H:%M')
 #parsha = get_zman(saturday, parsha_text,0,20)
 #print(parsha)
-#update_minyan_status(FRIDAY_STATUS_RANGE_NAME,values = [['OK']])
+#update_minyan_status(FRIDAY_STATUS_RANGE,values = [['OK']])
 #protect_sheet()
 
 
 from get_shabbos_times import get_just_time
 candles = get_just_time("message","candles")
 friday_mincha = candles
+#saturday_mincha =
 havdalah = get_just_time("message","havdalah")
 
 parsha = get_just_time("title","parashat")

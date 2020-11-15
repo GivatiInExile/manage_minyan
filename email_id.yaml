@@ -1,117 +1,13 @@
-dictitems:
-  ? !!python/tuple
-  - S1habbatParshatVayigash
-  - shulpresidente@gmail.com
-  : <157765298366.30509.13586749748767500436@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-  ? !!python/tuple
-  - S1habbatParshatVayigash
-  - sk8rukus@aol.com
-  : <157765322561.30509.1866956604376335494@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-  ? !!python/tuple
-  - S2habbatParshatVayigash
-  - shulpresidente@gmail.com
-  : null
+dictitems: null
+? !!python/tuple
+- cross-creek-minyan@googlegroups.com
+- ShabbatParshasChayeiSara
+: <160502985892.9348.5868156837578023990@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
+? !!python/tuple
+- danlandesman@gmail.com
+- ShabbatParshasToldos
+: <160545119554.2664.10095409205334976546@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
 ? !!python/tuple
 - shulpresidente@gmail.com
-- ShabbatParshatYitro-
-: <158128895205.14338.8562283798163461604@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-? !!python/tuple
-- cross-creek-minyan@googlegroups.com
-- ShabbatParshatYitro-
-: <158129117388.16352.9768135661187326402@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-? !!python/tuple
-- shulpresidente@gmail.com
-- ShabbatParshatShekalim
-: <158189764167.1779.6101878506285356432@daniels-MacBook-Pro.local>
-? !!python/tuple
-- cross-creek-minyan@googlegroups.com
-- ShabbatParshatShekalim
-: <158189770688.2017.16291409197996696385@daniels-MacBook-Pro.local>
-? !!python/tuple
-- shulpresidente@gmail.com
-- ShabbatParshatTerumah
-: <158249014514.6749.4701287706712769551@daniels-MacBook-Pro.local>
-? !!python/tuple
-- cross-creek-minyan@googlegroups.com
-- ShabbatParshatTerumah
-: <158249021775.7037.9541903125583754285@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-? !!python/tuple
-- cross-creek-minyan@googlegroups.com
-- ShabbatParshatZachor
-: <158315966503.1666.13348023283691379703@daniels-MacBook-Pro.local>
-? !!python/tuple
-- shulpresidente@gmail.com
-- ShabbatParshatParah-
-: <158371902901.6446.4533117505798897033@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-? !!python/tuple
-- cross-creek-minyan@googlegroups.com
-- ShabbatParshatParah-
-: <158371911215.6584.5338955515247052185@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-? !!python/tuple
-- cross-creek-minyan@googlegroups.com
-- ShabbatParshatHachodesh
-: <158433139153.13739.10431750082878559576@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-? !!python/tuple
-- shulpresidente@gmail.com
-- ShabbatParshatPinchas
-: <159407488329.22263.16913539066159036793@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-? !!python/tuple
-- adina.landesman@gmail.com
-- ShabbatParshatPinchas
-: <159417011787.24292.16851174137423615159@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-? !!python/tuple
-- danlandesman@gmail.com
-- ShabbatParshatPinchas
-: <159417160965.25491.11324363304691875982@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-? !!python/tuple
-- cross-creek-minyan@googlegroups.com
-- ShabbatParshatPinchas
-: <159417474110.26920.8480991202211150882@daniels-MacBook-Pro-2.local>
-? !!python/tuple
-- danlandesman@gmail.com
-- ShabbatParshatMatot-Masei
-: <159468174797.35796.10205942106929961212@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-? !!python/tuple
-- cross-creek-minyan@googlegroups.com
-- ShabbatParshatMatot-Masei
-: <159468300955.35959.12103995952433376077@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-? !!python/tuple
-- danlandesman@gmail.com
-- ShabbatParshatDevarim
-: <159517177956.9149.12591946073151674217@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-? !!python/tuple
-- cross-creek-minyan@googlegroups.com
-- ShabbatParshatDevarim
-: <159533480895.14237.4340583703034932410@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-? !!python/tuple
-- danlandesman@gmail.com
-- ShabbatParshatVaetchanan
-: <159588554594.22666.16717252586637046158@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-? !!python/tuple
-- cross-creek-minyan@googlegroups.com
-- ShabbatParshatVaetchanan
-: <159588723332.23271.13055658116111280844@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-? !!python/tuple
-- cross-creek-minyan@googlegroups.com
-- ShabbatParshatEikev-
-: <159655824138.4504.3337892473408848700@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-? !!python/tuple
-- cross-creek-minyan@googlegroups.com
-- ShabbatParshatRe'ehA
-: <159715326743.2717.10239368899100204754@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-? !!python/tuple
-- danlandesman@gmail.com
-- ShabbatParshatShoftim
-: <159776659930.6691.1260501141663811649@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-? !!python/tuple
-- cross-creek-minyan@googlegroups.com
-- ShabbatParshatShoftim
-: <159776724079.6918.6604917981131235806@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
-? !!python/tuple
-- danlandesman@gmail.com
-- ShabbatParshasKiSeitzei
-: <159840850674.22123.13648365334290685033@1.0.0.127.in-addr.arpa>
-? !!python/tuple
-- cross-creek-minyan@googlegroups.com
-- ShabbatParshasKiSeitzei
-: <159840859237.22249.6413555713737951509@1.0.0.127.in-addr.arpa>
+- ShabbatParshasToldos
+: <160545772689.5888.15347558604943267521@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>

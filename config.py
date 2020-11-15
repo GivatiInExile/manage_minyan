@@ -14,7 +14,11 @@ load_dotenv(find_dotenv())
 EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
 PASSWORD = os.getenv("GMAIL_PASSWORD")
 RECIPIENT = os.getenv("RECIPIENT") #Email or group
-doc = os.getenv("GOOGLE_DOC")
+DOC = os.getenv("GOOGLE_DOC")
+SECRET_FILE = os.getenv("SECRET_FILE")
+MINYAN_ADDR = os.getenv("MINYAN_ADDR")
+SPREADSHEET_ID = os.getenv("SAMPLE_SPREADSHEET_ID")
+YAML_ADDR = os.getenv("YAML_ADDR")
 
 #for debugging and ensuring test recipient not set
 print(RECIPIENT)

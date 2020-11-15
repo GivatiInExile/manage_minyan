@@ -8,7 +8,7 @@ Created on Tue Dec 17 19:33:46 2019
 import smtplib
 import email.utils
 from email.mime.multipart import MIMEMultipart
-import config
+from config import *
 import quickstart
 import email_messages as mm
 # from datetime import datetime
@@ -37,7 +37,7 @@ def set_confirm_flag_to_true():
 def get_msg_id(subj, toaddr):
     key = (toaddr, subj)
     id_dict = load_yaml()
-    if key in id_dict.keys():
+    if key in id_dict.keys() and "Bereshis" not in subj:
         msg_id = id_dict[(toaddr, subj)]
     else:
         id_dict[(toaddr, subj)] = email.utils.make_msgid()
@@ -46,12 +46,10 @@ def get_msg_id(subj, toaddr):
     return msg_id
 
 
-fromaddr = config.EMAIL_ADDRESS
-toaddr = config.RECIPIENT
+fromaddr = EMAIL_ADDRESS
+toaddr = RECIPIENT
 
 
-# CC = ['<INSERT CC RECIPIENT>']
-# BCC = ['<INSERT BCC RECIPIENT>']
 def send_email(subject, msg):
     try:
         server = smtplib.SMTP('smtp.gmail.com:587')
@@ -61,16 +59,15 @@ def send_email(subject, msg):
         server.ehlo()
         server.starttls()
         try:
-            server.login(config.EMAIL_ADDRESS, config.PASSWORD)
+            server.login(EMAIL_ADDRESS, PASSWORD)
 
             subj = '{}'.format(subject.format(quickstart.parsha))
 
             id_subj = "".join(subj.split())
             id_toaddr = "".join(toaddr.split())
             myid = get_msg_id(id_subj, id_toaddr)
-            message = ("From: %s\r\n" % config.EMAIL_ADDRESS
+            message = ("From: %s\r\n" % EMAIL_ADDRESS
                        + "To: %s\r\n" % toaddr
-                       # + "CC: %s\r\n" % ",".join(CC)
                        + "Subject: %s\r\n" % subj
                        + "Message-ID: %s\r\n" % myid
                        + "\r\n" + msg)
@@ -84,24 +81,24 @@ def send_email(subject, msg):
                           .format(inspect.stack()[0].function,
                                   inspect.stack()[1].function))
 
-        server.sendmail(config.EMAIL_ADDRESS, toaddrs, message)
+        server.sendmail(EMAIL_ADDRESS, toaddrs, message)
         server.quit()
 
     except:
         print("email failed to send")
 
-FRIDAY_STATUS_RANGE_NAME = 'Form Responses 1!D2'
-SATURDAY_STATUS_RANGE_NAME = 'Form Responses 1!D3:E3'
+FRIDAY_STATUS_RANGE = 'Form Responses 1!D2:E2'
+SATURDAY_STATUS_RANGE = 'Form Responses 1!D3:E3'
 
 def on_monday():
     quickstart.clear_sheet()
-    quickstart.update_minyan_status(FRIDAY_STATUS_RANGE_NAME,values = [['TBD']])
-    quickstart.update_minyan_status(SATURDAY_STATUS_RANGE_NAME,values = [['TBD']])
+    quickstart.update_minyan_status(FRIDAY_STATUS_RANGE,values = [['TBD']])
+    quickstart.update_minyan_status(FRIDAY_STATUS_RANGE,values = [['TBD']])
     set_confirm_flag_to_false()
-    msg = mm.msg_minyan_details.format(quickstart.candles,
-                                       quickstart.candles ,
-                                       #quickstart.friday_mincha,
-                                       # quickstart.saturday_mincha,
+    msg = mm.msg_minyan_details.format(quickstart.candles, #Use if retrieving times for hebcal API
+                                       quickstart.candles , #Use if retrieving times for hebcal API
+                                       #quickstart.friday_mincha, ##Use if reverting to scraping for Synagogue website
+                                       # quickstart.saturday_mincha, ##Use if reverting to scraping for Synagogue website
                                        "N/A",
                                        quickstart.saturday_maariv,
                                        quickstart.havdalah)
@@ -128,29 +125,29 @@ def on_thursday(subject=subject, friday_flag=False):
         msg_signoff=mm.msg_signoff + mm.msg_post_script_friday
     else:
         msg_plan = ""
-        msg_signoff = msg_signoff + mm.msg_post_script_thursday
+        msg_signoff = mm.msg_signoff + mm.msg_post_script_thursday
     if friday_tally < 10:
         msg_status = mm.msg_need_ppl_fri.format((10 - friday_tally))
-        quickstart.update_minyan_status(FRIDAY_STATUS_RANGE_NAME, values=[['TBD']])
+        quickstart.update_minyan_status(FRIDAY_STATUS_RANGE, values=[['TBD']])
     else:
         msg_status = mm.msg_fri_minyan_confirmed
-        quickstart.update_minyan_status(FRIDAY_STATUS_RANGE_NAME, values=[['MINYAN IS ON']])
+        quickstart.update_minyan_status(FRIDAY_STATUS_RANGE, values=[['MINYAN IS ON']])
     if saturday_tally < 10:
         msg_status = msg_status + mm.msg_need_ppl_sat.format((10 - saturday_tally)) #+ msg_end
-        quickstart.update_minyan_status(SATURDAY_STATUS_RANGE_NAME, values=[['TBD']])
+        quickstart.update_minyan_status(SATURDAY_STATUS_RANGE, values=[['TBD']])
     else:
         if friday_tally >= 10:
             msg_status = mm.msg_both_confirmed
             msg2 = ""
             set_confirm_flag_to_true()
-            quickstart.update_minyan_status(FRIDAY_STATUS_RANGE_NAME, values=[['MINYAN IS ON']])
-            quickstart.update_minyan_status(SATURDAY_STATUS_RANGE_NAME, values=[['MINYAN IS ON']])
+            quickstart.update_minyan_status(FRIDAY_STATUS_RANGE, values=[['MINYAN IS ON']])
+            quickstart.update_minyan_status(SATURDAY_STATUS_RANGE, values=[['MINYAN IS ON']])
 
         else:
             msg_status = mm.msg_sat_minyan_confirmed
-            quickstart.update_minyan_status(SATURDAY_STATUS_RANGE_NAME, values=[['MINYAN IS ON']])
+            quickstart.update_minyan_status(SATURDAY_STATUS_RANGE, values=[['MINYAN IS ON']])
     #msg = msg + mm.msg_signup + mm.msg_signoff
-    msg = msg_status + msg_tally + msg_plan + msg_info + mm.msg_signup + mm.msg_signoff
+    msg = msg_status + msg_tally + msg_plan + msg_info + mm.msg_signup + msg_signoff
     send_email(subject, msg)
 
 
@@ -170,35 +167,29 @@ def last_call(subject=subject):
                                            #quickstart.friday_mincha,
                                            quickstart.candles,
                                            "N/A",
-                                           #quickstart.saturday_mincha,
+                                           #quickstart.saturday_mincha, #Comment out N/A and use this when Mincha is planned
                                            quickstart.saturday_maariv,
                                            quickstart.havdalah)
         msg = mm.msg_current_tally.format(friday_tally, saturday_tally) + msg
 
         if friday_tally < 10 and saturday_tally < 10:
             msg = mm.msg_both_nogo + msg
-            quickstart.update_minyan_status(FRIDAY_STATUS_RANGE_NAME, values=[['MINYAN IS CANCELED']])
-            quickstart.update_minyan_status(SATURDAY_STATUS_RANGE_NAME, values=[['MINYAN IS CANCELED']])
+            quickstart.update_minyan_status(FRIDAY_STATUS_RANGE, values=[['MINYAN IS CANCELED']])
+            quickstart.update_minyan_status(SATURDAY_STATUS_RANGE, values=[['MINYAN IS CANCELED']])
         elif friday_tally >= 10 and saturday_tally < 10:
             msg = mm.msg_fri_minyan_confirmed + mm.msg_sat_nogo + msg
-            quickstart.update_minyan_status(FRIDAY_STATUS_RANGE_NAME, values=[['MINYAN IS ON']])
-            quickstart.update_minyan_status(SATURDAY_STATUS_RANGE_NAME, values=[['MINYAN IS CANCELED']])
+            quickstart.update_minyan_status(FRIDAY_STATUS_RANGE, values=[['MINYAN IS ON']])
+            quickstart.update_minyan_status(SATURDAY_STATUS_RANGE, values=[['MINYAN IS CANCELED']])
         elif friday_tally < 10 and saturday_tally >= 10:
             msg = mm.msg_sat_minyan_confirmed + mm.msg_fri_nogo + msg
-            quickstart.update_minyan_status(FRIDAY_STATUS_RANGE_NAME, values=[['MINYAN IS CANCELED']])
-            quickstart.update_minyan_status(SATURDAY_STATUS_RANGE_NAME, values=[['MINYAN IS ON']])
+            quickstart.update_minyan_status(FRIDAY_STATUS_RANGE, values=[['MINYAN IS CANCELED']])
+            quickstart.update_minyan_status(SATURDAY_STATUS_RANGE, values=[['MINYAN IS ON']])
         else:
             msg = mm.msg_both_confirmed + msg
-            quickstart.update_minyan_status(FRIDAY_STATUS_RANGE_NAME, values=[['MINYAN IS ON']])
-            quickstart.update_minyan_status(SATURDAY_STATUS_RANGE_NAME, values=[['MINYAN IS ON']])
+            quickstart.update_minyan_status(FRIDAY_STATUS_RANGE, values=[['MINYAN IS ON']])
+            quickstart.update_minyan_status(SATURDAY_STATUS_RANGE, values=[['MINYAN IS ON']])
         msg = msg + mm.msg_signup + mm.msg_signoff +mm.msg_post_script_lastcall
         send_email(subject, msg)
 
     else:  # Don't send email if minyan already confirmed
         pass
-
-
-#on_monday()
-#on_thursday()
-# on_friday()
-# last_call()
