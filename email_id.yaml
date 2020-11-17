@@ -1,13 +1,13 @@
-dictitems: null
-? !!python/tuple
-- cross-creek-minyan@googlegroups.com
-- ShabbatParshasChayeiSara
-: <160502985892.9348.5868156837578023990@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
+dictitems:
+  ? !!python/tuple
+  - S1habbatParshatVayigash
+  - shulpresidente@gmail.com
+  : <157765298366.30509.13586749748767500436@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
 ? !!python/tuple
 - danlandesman@gmail.com
 - ShabbatParshasToldos
-: <160545119554.2664.10095409205334976546@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
+: <160562470358.14673.14308984397483676977@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
 ? !!python/tuple
-- shulpresidente@gmail.com
+- cross-creek-minyan@googlegroups.com
 - ShabbatParshasToldos
-: <160545772689.5888.15347558604943267521@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>
+: <160562491420.15098.4986774036390762717@1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa>

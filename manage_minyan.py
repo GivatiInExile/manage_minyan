@@ -36,10 +36,19 @@ def set_confirm_flag_to_true():
 
 def get_msg_id(subj, toaddr):
     key = (toaddr, subj)
-    id_dict = load_yaml()
+    try:
+        id_dict = load_yaml()
+    except:
+        logging.error('Error loading YAML\n Function Trace: {} > {} > {}'
+                    .format(inspect.stack()[0].function,
+                            inspect.stack()[1].function,
+                            inspect.stack()[2].function), exc_info=True)
+
     if key in id_dict.keys() and "Bereshis" not in subj:
-        msg_id = id_dict[(toaddr, subj)]
+            msg_id = id_dict[(toaddr, subj)]
+
     else:
+        print("making new ID for email")
         id_dict[(toaddr, subj)] = email.utils.make_msgid()
         msg_id = id_dict[(toaddr, subj)]
     store_yaml(id_dict)
@@ -77,8 +86,7 @@ def send_email(subject, msg):
 
         except:
             logging.error('Error sending email\n Function Trace: {} > {}'
-                          # print('Error sending email\n Function Trace: {} > {}'
-                          .format(inspect.stack()[0].function,
+                         .format(inspect.stack()[0].function,
                                   inspect.stack()[1].function))
 
         server.sendmail(EMAIL_ADDRESS, toaddrs, message)

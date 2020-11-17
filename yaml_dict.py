@@ -14,13 +14,13 @@ path = r'%s' % YAML_ADDR
 
 def store_yaml(id_dict):
         with open(path, 'w') as file:
-                documents = yaml.dump(id_dict, file)
+            documents = yaml.dump(id_dict, file)
 
 
 def load_yaml():
-    with open(path, 'w') as file:
+    with open(path, 'r') as file:
         documents = yaml.full_load(file)
 
     return documents
     for item, doc in documents.items():
-            print(item, ":", doc)
+        print(item, ":", doc)
